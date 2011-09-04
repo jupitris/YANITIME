@@ -10,35 +10,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110807021653) do
+ActiveRecord::Schema.define(:version => 20110903025317) do
 
-  create_table "locations", :force => true do |t|
-    t.string   "title"
-    t.string   "description"
-    t.integer  "latitude"
-    t.integer  "longitude"
-    t.string   "created_by"
-    t.datetime "created_on"
-    t.string   "updated_by"
-    t.datetime "updated_on"
-    t.integer  "delete_no"
-    t.integer  "version_no"
+  create_table "places", :force => true do |t|
+    t.string   "place_name", :limit => 100,                                                   :null => false
+    t.decimal  "latitude",                   :precision => 17, :scale => 14, :default => 0.0, :null => false
+    t.decimal  "longitude",                  :precision => 17, :scale => 14, :default => 0.0, :null => false
+    t.string   "comment",    :limit => 4000
+    t.string   "created_by", :limit => 50,                                                    :null => false
     t.datetime "created_at"
+    t.string   "updated_by", :limit => 50
     t.datetime "updated_at"
+    t.integer  "delete_no",                                                  :default => 0,   :null => false
+    t.integer  "version_no",                                                 :default => 0,   :null => false
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "user_id"
-    t.string   "password"
-    t.string   "name"
-    t.string   "created_by"
-    t.datetime "created_on"
-    t.string   "updated_by"
-    t.datetime "updated_on"
-    t.integer  "delete_no"
-    t.integer  "version_no"
+    t.string   "user_name",    :limit => 50,                 :null => false
+    t.string   "password",     :limit => 100,                :null => false
+    t.string   "mail_address", :limit => 100,                :null => false
+    t.string   "nick_name",    :limit => 50,                 :null => false
+    t.integer  "age"
+    t.integer  "gender"
+    t.string   "created_by",   :limit => 50,                 :null => false
     t.datetime "created_at"
+    t.string   "updated_by",   :limit => 50
     t.datetime "updated_at"
+    t.integer  "delete_no",                   :default => 0, :null => false
+    t.integer  "version_no",                  :default => 0, :null => false
   end
 
 end

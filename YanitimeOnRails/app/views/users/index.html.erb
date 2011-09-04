@@ -3,13 +3,16 @@
 <table>
   <tr>
     <th>Id</th>
-    <th>User</th>
+    <th>User name</th>
     <th>Password</th>
-    <th>Name</th>
+    <th>Mail address</th>
+    <th>Nick name</th>
+    <th>Age</th>
+    <th>Gender</th>
     <th>Created by</th>
-    <th>Created on</th>
+    <th>Created at</th>
     <th>Updated by</th>
-    <th>Updated on</th>
+    <th>Updated at</th>
     <th>Delete no</th>
     <th>Version no</th>
     <th></th>
@@ -20,13 +23,16 @@
 <% @users.each do |user| %>
   <tr>
     <td><%= user.id %></td>
-    <td><%= user.user_id %></td>
+    <td><%= user.user_name %></td>
     <td><%= user.password %></td>
-    <td><%= user.name %></td>
+    <td><%= user.mail_address %></td>
+    <td><%= user.nick_name %></td>
+    <td><%= user.age %></td>
+    <td><%= user.gender %></td>
     <td><%= user.created_by %></td>
-    <td><%= user.created_on %></td>
+    <td><%= user.created_at %></td>
     <td><%= user.updated_by %></td>
-    <td><%= user.updated_on %></td>
+    <td><%= user.updated_at %></td>
     <td><%= user.delete_no %></td>
     <td><%= user.version_no %></td>
     <td><%= link_to 'Show', user %></td>

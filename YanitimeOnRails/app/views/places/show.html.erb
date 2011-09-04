@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @place.id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @place.user_id %>
+</p>
+
+<p>
+  <b>Place name:</b>
+  <%= @place.place_name %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @place.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @place.longitude %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @place.comment %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @place.created_by %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%= @place.created_at %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @place.updated_by %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%= @place.updated_at %>
+</p>
+
+<p>
+  <b>Delete no:</b>
+  <%= @place.delete_no %>
+</p>
+
+<p>
+  <b>Version no:</b>
+  <%= @place.version_no %>
+</p>
+
+
+<%= link_to 'Edit', edit_place_path(@place) %> |
+<%= link_to 'Back', places_path %>
