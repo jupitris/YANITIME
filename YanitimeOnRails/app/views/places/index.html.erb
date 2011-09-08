@@ -45,21 +45,3 @@
 <%= link_to 'New Place', new_place_path %>
 
 <div id="map" style="width: 500px; height: 500px"></div>
-<script type="text/javascript">
-//<![CDATA[
-if (GBrowserIsCompatible()) {
-  var map = new GMap2(document.getElementById("map"));
-  map.addControl(new GLargeMapControl());
-  map.addControl(new GMapTypeControl());
-  map.setCenter(new GLatLng(38, 138), 5);
-  map.disableDragging();
-}
-GEvent.addListener(map, 'click', function(overlay, point) {
-  if (point) {
-    alert("x = " + point.x + ", y = " + point.y);
-    map.openInfoWindow(point,
-    document.createTextNode("openInfoWindow Test"));
-  }
-});
-//]]>
-</script>
