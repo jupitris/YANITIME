@@ -1,4 +1,6 @@
 YanitimeOnRails::Application.routes.draw do
+  get "smoking_area/index"
+
   resources :places
 
   resources :users
