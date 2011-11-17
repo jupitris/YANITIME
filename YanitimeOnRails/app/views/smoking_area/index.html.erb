@@ -1,3 +1,8 @@
 <h1>YANITIME</h1>
 <div id="map" style="width: 500px; height: 500px"></div>
 <div>address: <input id="address" /><input id="getLatlng" type="button" value="Get Lat & Lng" />
+  
+<%= form_tag do %>
+  <%= text_area_tag(:message, "Please input comments.", :size => "24x6") %>
+  <%= submit_tag "Create" %>
+<% end %>
