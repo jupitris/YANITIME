@@ -24,6 +24,7 @@
 package yanitime4u.yanitime.logic.impl;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Map;
 
@@ -100,9 +101,16 @@ public class PlaceLogicImpl implements PlaceLogic {
     @Override
     public Places create(Places place) {
         Transaction tx = Datastore.beginTransaction();
-        Datastore.put(place);
-        tx.commit();
-        return place;
+        try {
+            Datastore.put(place);
+            tx.commit();
+            return place;
+        } catch (ConcurrentModificationException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
     /*
@@ -114,11 +122,18 @@ public class PlaceLogicImpl implements PlaceLogic {
     @Override
     public Places update(Key key, Long version, Map<String, Object> input) {
         Transaction tx = Datastore.beginTransaction();
-        Places latest = Datastore.get(meta, key, version);
-        BeanUtil.copy(input, latest);
-        Datastore.put(tx, latest);
-        tx.commit();
-        return latest;
+        try {
+            Places latest = Datastore.get(meta, key, version);
+            BeanUtil.copy(input, latest);
+            Datastore.put(tx, latest);
+            tx.commit();
+            return latest;
+        } catch (ConcurrentModificationException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
     /*
@@ -130,9 +145,16 @@ public class PlaceLogicImpl implements PlaceLogic {
     @Override
     public void delete(Key key, Long version) {
         Transaction tx = Datastore.beginTransaction();
-        Places latest = Datastore.get(meta, key, version);
-        Datastore.delete(latest.getKey());
-        tx.commit();
+        try {
+            Places latest = Datastore.get(meta, key, version);
+            Datastore.delete(latest.getKey());
+            tx.commit();
+        } catch (ConcurrentModificationException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
 }

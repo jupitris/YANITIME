@@ -24,6 +24,7 @@
 package yanitime4u.yanitime.logic.impl;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Map;
 
@@ -108,9 +109,16 @@ public class UserLogicImpl implements UserLogic {
     @Override
     public Users create(Users users) {
         Transaction tx = Datastore.beginTransaction();
-        Datastore.put(users);
-        tx.commit();
-        return users;
+        try {
+            Datastore.put(users);
+            tx.commit();
+            return users;
+        } catch (ConcurrentModificationException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
     /*
@@ -122,11 +130,18 @@ public class UserLogicImpl implements UserLogic {
     @Override
     public Users update(Key key, Long version, Map<String, Object> input) {
         Transaction tx = Datastore.beginTransaction();
-        Users latest = Datastore.get(meta, key, version);
-        BeanUtil.copy(input, latest);
-        Datastore.put(tx, latest);
-        tx.commit();
-        return latest;
+        try {
+            Users latest = Datastore.get(meta, key, version);
+            BeanUtil.copy(input, latest);
+            Datastore.put(tx, latest);
+            tx.commit();
+            return latest;
+        } catch (ConcurrentModificationException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
     /*
@@ -138,9 +153,16 @@ public class UserLogicImpl implements UserLogic {
     @Override
     public void delete(Key key, Long version) {
         Transaction tx = Datastore.beginTransaction();
-        Users latest = Datastore.get(meta, key, version);
-        Datastore.delete(latest.getKey());
-        tx.commit();
+        try {
+            Users latest = Datastore.get(meta, key, version);
+            Datastore.delete(latest.getKey());
+            tx.commit();
+        } catch (ConcurrentModificationException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
 }
