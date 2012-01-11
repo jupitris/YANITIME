@@ -103,16 +103,6 @@ public class UserLogicImpl implements UserLogic {
     /*
      * (non-Javadoc)
      * 
-     * @see yanitime4u.yanitime.logic.UserLogic#findAll()
-     */
-    @Override
-    public List<Users> findAll() {
-        return Datastore.query(meta).sort(meta.key.asc).asList();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see yanitime4u.yanitime.logic.UserLogic#create(yanitime4u.yanitime.model.Users)
      */
     @Override

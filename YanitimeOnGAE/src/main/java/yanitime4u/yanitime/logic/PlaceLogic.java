@@ -41,8 +41,6 @@ public interface PlaceLogic {
 
     List<Places> findByCondition(PlaceCondition condition);
 
-    List<Places> findAll();
-
     Places create(Places places);
 
     Places update(Key key, Long version, Map<String, Object> input);

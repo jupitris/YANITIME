@@ -41,8 +41,6 @@ public interface UserLogic {
 
     List<Users> findByCondition(UserCondition condition);
 
-    List<Users> findAll();
-
     Users create(Users users);
 
     Users update(Key key, Long version, Map<String, Object> input);

@@ -23,7 +23,7 @@
   			<artifactId>maven-gae-plugin</artifactId>
   			<version>0.9.2</version>
             <configuration>
-                <sdkDir>/appengine-java-sdk-1.5.5</sdkDir>
+                <sdkDir>/appengine-java-sdk-1.6.0</sdkDir>
             </configuration>
   		</plugin>
   		<plugin>
@@ -162,28 +162,28 @@
     <dependency>
   		<groupId>com.google.appengine</groupId>
   		<artifactId>appengine-api-1.0-sdk</artifactId>
-  		<version>1.5.5</version>
+  		<version>${gae.version}</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
     <dependency>
   		<groupId>com.google.appengine</groupId>
   		<artifactId>appengine-api-labs</artifactId>
-  		<version>1.5.5</version>
+  		<version>${gae.version}</version>
   		<type>jar</type>
   		<scope>test</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.google.appengine</groupId>
   		<artifactId>appengine-api-stubs</artifactId>
-  		<version>1.5.5</version>
+  		<version>${gae.version}</version>
   		<type>jar</type>
   		<scope>test</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.google.appengine</groupId>
   		<artifactId>appengine-testing</artifactId>
-  		<version>1.5.5</version>
+  		<version>${gae.version}</version>
   		<type>jar</type>
   		<scope>test</scope>
   	</dependency>
@@ -256,7 +256,7 @@
   <properties>
   	<generated.src>target/apt_generated</generated.src>
   	<generated.war>war</generated.war>
+    <gae.version>1.6.0</gae.version>
   	<slim3.version>1.0.14</slim3.version>
-  	<gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
   </properties>
 </project>

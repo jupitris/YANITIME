@@ -37,7 +37,6 @@ import yanitime4u.yanitime.condition.PlaceCondition;
 import yanitime4u.yanitime.logic.PlaceLogic;
 import yanitime4u.yanitime.meta.PlacesMeta;
 import yanitime4u.yanitime.model.Places;
-import yanitime4u.yanitime.model.Users;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
@@ -57,7 +56,7 @@ public class PlaceLogicImpl implements PlaceLogic {
      */
     @Override
     public Places findByKey(Long id) {
-        Key key = Datastore.createKey(Users.class, id);
+        Key key = Datastore.createKey(Places.class, id);
         return Datastore.get(meta, key);
     }
 
@@ -91,16 +90,6 @@ public class PlaceLogicImpl implements PlaceLogic {
         }
 
         return filters.toArray(new FilterCriterion[filters.size()]);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see yanitime4u.yanitime.logic.PlaceLogic#findAll()
-     */
-    @Override
-    public List<Places> findAll() {
-        return Datastore.query(meta).sort(meta.key.asc).asList();
     }
 
     /*

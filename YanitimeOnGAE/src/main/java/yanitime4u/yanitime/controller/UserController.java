@@ -50,10 +50,6 @@ public class UserController {
         return userLogic.findByCondition(condition);
     }
 
-    public List<Users> findAll() {
-        return userLogic.findAll();
-    }
-
     public void create(Users users) {
         userLogic.create(users);
     }
