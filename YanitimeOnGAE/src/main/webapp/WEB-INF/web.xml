@@ -21,8 +21,8 @@
                 {
                     "debug": true,
                     "mappings": {
-                        "/yanitime/{class}.json":"yanitime4u.yanitime.controller.${class}Controller",
-                        "/yanitime/{class}/{id:[0-9]+}.json":{
+                        "/yanitime/{class}":"yanitime4u.yanitime.controller.${class}Controller",
+                        "/yanitime/{class}/{id:[0-9]+}":{
                             "target": "yanitime4u.yanitime.controller.${class}Controller",
                             "method": {"GET": "findById"},
                             "verb": [ "GET" ]
@@ -34,6 +34,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>restServlet</servlet-name>
-        <url-pattern>*.json</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 </web-app>
