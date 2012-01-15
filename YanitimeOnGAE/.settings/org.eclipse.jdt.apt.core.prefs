@@ -1,5 +1,0 @@
-#Fri Nov 25 00:28:10 JST 2011
-eclipse.preferences.version=1
-org.eclipse.jdt.apt.aptEnabled=true
-org.eclipse.jdt.apt.genSrcDir=target/generate_sources/apt
-org.eclipse.jdt.apt.reconcileEnabled=true
