@@ -9,9 +9,9 @@ one:
   age: 1
   gender: 1
   created_by: MyString
-  created_at: 2011-09-03 11:01:27
+  created_at: 2011-12-11 18:42:54
   updated_by: MyString
-  updated_at: 2011-09-03 11:01:27
+  updated_at: 2011-12-11 18:42:54
   delete_no: 1
   version_no: 1
 
@@ -24,8 +24,8 @@ two:
   age: 1
   gender: 1
   created_by: MyString
-  created_at: 2011-09-03 11:01:27
+  created_at: 2011-12-11 18:42:54
   updated_by: MyString
-  updated_at: 2011-09-03 11:01:27
+  updated_at: 2011-12-11 18:42:54
   delete_no: 1
   version_no: 1

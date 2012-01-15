@@ -6,11 +6,11 @@ one:
   place_name: MyString
   latitude: 9.99
   longitude: 9.99
-  comment: MyText
+  comment: MyString
   created_by: MyString
-  created_at: 2011-09-03 11:53:17
+  created_at: 2011-12-11 18:43:06
   updated_by: MyString
-  updated_at: 2011-09-03 11:53:17
+  updated_at: 2011-12-11 18:43:06
   delete_no: 1
   version_no: 1
 
@@ -20,10 +20,10 @@ two:
   place_name: MyString
   latitude: 9.99
   longitude: 9.99
-  comment: MyText
+  comment: MyString
   created_by: MyString
-  created_at: 2011-09-03 11:53:17
+  created_at: 2011-12-11 18:43:06
   updated_by: MyString
-  updated_at: 2011-09-03 11:53:17
+  updated_at: 2011-12-11 18:43:06
   delete_no: 1
   version_no: 1
