@@ -121,9 +121,6 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
         Assert.assertEquals(expected.getPlaceName(), actual.getPlaceName());
         Assert.assertEquals(expected.getUserId(), actual.getUserId());
         Assert.assertEquals(expected.getComment(), actual.getComment());
-        Assert.assertEquals(expected.getCoordinate().getLatitude(), actual.getCoordinate()
-                .getLatitude());
-        Assert.assertEquals(expected.getCoordinate().getLongitude(), actual.getCoordinate()
-                .getLongitude());
+        Assert.assertEquals(expected.getCoordinate(), actual.getCoordinate());
     }
 }
