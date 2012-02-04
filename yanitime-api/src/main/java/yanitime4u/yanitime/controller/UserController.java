@@ -29,7 +29,7 @@ import java.util.Map;
 
 import yanitime4u.yanitime.condition.UserCondition;
 import yanitime4u.yanitime.logic.UserLogic;
-import yanitime4u.yanitime.logic.impl.UserLogicImpl;
+import yanitime4u.yanitime.logic.UserLogicImpl;
 import yanitime4u.yanitime.model.Users;
 
 import com.google.appengine.api.datastore.Key;

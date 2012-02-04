@@ -23,46 +23,18 @@
  */
 package yanitime4u.yanitime.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import yanitime4u.yanitime.condition.PlaceCondition;
-import yanitime4u.yanitime.logic.PlaceLogic;
-import yanitime4u.yanitime.logic.PlaceLogicImpl;
-import yanitime4u.yanitime.model.Places;
-
-import com.google.appengine.api.datastore.Key;
+import org.junit.Test;
 
 /**
  * @author jupitris
- * 
+ *
  */
-public class PlaceController {
-
-    private final PlaceLogic placeLogic = new PlaceLogicImpl();
-
-    public Places findById(Map<String, Object> param) {
-        return placeLogic.findByKey(Long.valueOf(param.get("id").toString()));
+public class PlaceControllerTest {
+    
+    public PlaceControllerTest() {
     }
-
-    public List<Places> find(PlaceCondition condition) {
-        return placeLogic.findByCondition(condition);
-    }
-
-    public Places create(Places places) {
-        return placeLogic.create(places);
-    }
-
-    public void update(Places places) {
-        Map<String, Object> input = new HashMap<String, Object>();
-        input.put("placeName", places.getPlaceName());
-        input.put("coordinate", places.getCoordinate());
-        input.put("comment", places.getComment());
-        placeLogic.update(places.getKey(), places.getVersion(), input);
-    }
-
-    public void delete(Key id, Long version) {
-        placeLogic.delete(id, version);
+    
+    @Test
+    public void testGetPlace() {
     }
 }

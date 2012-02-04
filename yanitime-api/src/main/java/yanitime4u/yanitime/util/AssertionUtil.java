@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011 Jupitris on Labs.
+ * Copyright (c) 2012 Jupitris on Labs.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -21,20 +21,23 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package yanitime4u.yanitime.api.service;
-
-import org.junit.Test;
+package yanitime4u.yanitime.util;
 
 /**
  * @author jupitris
- *
+ * 
  */
-public class PlaceControllerTest {
-    
-    public PlaceControllerTest() {
+public final class AssertionUtil {
+
+    public static void assertNotBlank(String s) {
+        if (org.slim3.util.StringUtil.isEmpty(s)) {
+            throw new IllegalArgumentException("argument cannot be null or empty.");
+        }
     }
-    
-    @Test
-    public void testGetPlace() {
+
+    public static void assertNotNull(Object o) {
+        if (o == null) {
+            throw new IllegalArgumentException("argument cannot be null.");
+        }
     }
 }

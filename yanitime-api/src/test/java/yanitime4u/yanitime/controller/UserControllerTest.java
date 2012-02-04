@@ -21,7 +21,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package yanitime4u.yanitime.api.service;
+package yanitime4u.yanitime.controller;
 
 import static org.junit.Assert.assertTrue;
 import net.arnx.jsonic.web.RESTServlet;

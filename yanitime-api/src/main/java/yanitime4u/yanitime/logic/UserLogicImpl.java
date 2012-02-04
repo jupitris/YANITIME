@@ -21,7 +21,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package yanitime4u.yanitime.logic.impl;
+package yanitime4u.yanitime.logic;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -34,10 +34,10 @@ import org.slim3.datastore.ModelQuery;
 import org.slim3.gen.util.StringUtil;
 import org.slim3.util.BeanUtil;
 
-import yanitime4u.yanitime.condition.PlaceCondition;
-import yanitime4u.yanitime.logic.PlaceLogic;
-import yanitime4u.yanitime.meta.PlacesMeta;
-import yanitime4u.yanitime.model.Places;
+import yanitime4u.yanitime.condition.UserCondition;
+import yanitime4u.yanitime.meta.UsersMeta;
+import yanitime4u.yanitime.model.Users;
+import yanitime4u.yanitime.util.AssertionUtil;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
@@ -46,18 +46,19 @@ import com.google.appengine.api.datastore.Transaction;
  * @author jupitris
  * 
  */
-public class PlaceLogicImpl implements PlaceLogic {
+public class UserLogicImpl implements UserLogic {
 
-    private final PlacesMeta meta = PlacesMeta.get();
+    private final UsersMeta meta = UsersMeta.get();
 
     /*
      * (non-Javadoc)
      * 
-     * @see yanitime4u.yanitime.logic.PlaceLogic#findByKey(java.lang.Long)
+     * @see yanitime4u.yanitime.logic.UserLogic#findByKey(java.lang.Long)
      */
     @Override
-    public Places findByKey(Long id) {
-        Key key = Datastore.createKey(Places.class, id);
+    public Users findByKey(Long id) {
+        AssertionUtil.assertNotNull(id);
+        Key key = Datastore.createKey(Users.class, id);
         return Datastore.get(meta, key);
     }
 
@@ -65,12 +66,13 @@ public class PlaceLogicImpl implements PlaceLogic {
      * (non-Javadoc)
      * 
      * @see
-     * yanitime4u.yanitime.logic.PlaceLogic#findByCondition(yanitime4u.yanitime.condition.PlaceCondition
+     * yanitime4u.yanitime.logic.UserLogic#findByCondition(yanitime4u.yanitime.condition.UserCondition
      * )
      */
     @Override
-    public List<Places> findByCondition(PlaceCondition condition) {
-        ModelQuery<Places> query = Datastore.query(meta);
+    public List<Users> findByCondition(UserCondition condition) {
+        AssertionUtil.assertNotNull(condition);
+        ModelQuery<Users> query = Datastore.query(meta);
         FilterCriterion[] filters = createFilterByCondition(condition);
 
         if (filters.length > 0) {
@@ -79,15 +81,23 @@ public class PlaceLogicImpl implements PlaceLogic {
         return query.asList();
     }
 
-    private FilterCriterion[] createFilterByCondition(PlaceCondition condition) {
+    private FilterCriterion[] createFilterByCondition(UserCondition condition) {
         List<FilterCriterion> filters = new ArrayList<FilterCriterion>();
 
-        if (!StringUtil.isEmpty(condition.getPlaceName())) {
-            filters.add(meta.placeName.equal(condition.getPlaceName()));
+        if (!StringUtil.isEmpty(condition.getUserId())) {
+            filters.add(meta.userId.equal(condition.getUserId()));
         }
 
-        if (condition.getCoordinate() != null) {
-            filters.add(meta.coordinate.equal(condition.getCoordinate()));
+        if (!StringUtil.isEmpty(condition.getUserName())) {
+            filters.add(meta.userName.equal(condition.getUserName()));
+        }
+
+        if (!StringUtil.isEmpty(condition.getEmail())) {
+            filters.add(meta.email.equal(condition.getEmail()));
+        }
+
+        if (!StringUtil.isEmpty(condition.getNickName())) {
+            filters.add(meta.nickName.equal(condition.getNickName()));
         }
 
         return filters.toArray(new FilterCriterion[filters.size()]);
@@ -96,15 +106,16 @@ public class PlaceLogicImpl implements PlaceLogic {
     /*
      * (non-Javadoc)
      * 
-     * @see yanitime4u.yanitime.logic.PlaceLogic#create(yanitime4u.yanitime.model.Places)
+     * @see yanitime4u.yanitime.logic.UserLogic#create(yanitime4u.yanitime.model.Users)
      */
     @Override
-    public Places create(Places place) {
+    public Users create(Users users) {
+        AssertionUtil.assertNotNull(users);
         Transaction tx = Datastore.beginTransaction();
         try {
-            Datastore.put(place);
+            Datastore.put(users);
             tx.commit();
-            return place;
+            return users;
         } catch (ConcurrentModificationException e) {
             if (tx.isActive()) {
                 tx.rollback();
@@ -116,14 +127,18 @@ public class PlaceLogicImpl implements PlaceLogic {
     /*
      * (non-Javadoc)
      * 
-     * @see yanitime4u.yanitime.logic.PlaceLogic#update(com.google.appengine.api.datastore.Key,
+     * @see yanitime4u.yanitime.logic.UserLogic#update(com.google.appengine.api.datastore.Key,
      * java.lang.Long, java.util.Map)
      */
     @Override
-    public Places update(Key key, Long version, Map<String, Object> input) {
+    public Users update(Key key, Long version, Map<String, Object> input) {
+        AssertionUtil.assertNotNull(key);
+        AssertionUtil.assertNotNull(version);
+        AssertionUtil.assertNotNull(input);
+
         Transaction tx = Datastore.beginTransaction();
         try {
-            Places latest = Datastore.get(meta, key, version);
+            Users latest = Datastore.get(meta, key, version);
             BeanUtil.copy(input, latest);
             Datastore.put(tx, latest);
             tx.commit();
@@ -139,14 +154,17 @@ public class PlaceLogicImpl implements PlaceLogic {
     /*
      * (non-Javadoc)
      * 
-     * @see yanitime4u.yanitime.logic.PlaceLogic#delete(com.google.appengine.api.datastore.Key,
+     * @see yanitime4u.yanitime.logic.UserLogic#delete(com.google.appengine.api.datastore.Key,
      * java.lang.Long)
      */
     @Override
     public void delete(Key key, Long version) {
+        AssertionUtil.assertNotNull(key);
+        AssertionUtil.assertNotNull(version);
+
         Transaction tx = Datastore.beginTransaction();
         try {
-            Places latest = Datastore.get(meta, key, version);
+            Users latest = Datastore.get(meta, key, version);
             Datastore.delete(latest.getKey());
             tx.commit();
         } catch (ConcurrentModificationException e) {
