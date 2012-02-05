@@ -275,11 +275,19 @@
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>org.mockito</groupId>
+  		<artifactId>mockito-core</artifactId>
+  		<version>${mockito.version}</version>
+  		<type>jar</type>
+  		<scope>test</scope>
+  	</dependency>
   </dependencies>
   <properties>
   	<generated.src>target/apt_generated</generated.src>
   	<generated.war>war</generated.war>
     <gae.version>1.6.0</gae.version>
   	<slim3.version>1.0.14</slim3.version>
+    <mockito.version>1.9.0</mockito.version>
   </properties>
 </project>
