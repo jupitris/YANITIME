@@ -23,14 +23,18 @@
  */
 package yanitime4u.yanitime.logic;
 
+import java.util.List;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slim3.datastore.Datastore;
+import org.slim3.datastore.EntityNotFoundRuntimeException;
 import org.slim3.tester.AppEngineTestCase;
 
+import yanitime4u.yanitime.condition.PlaceCondition;
 import yanitime4u.yanitime.model.Places;
 
 import com.google.appengine.api.datastore.GeoPt;
@@ -122,5 +126,226 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
         Assert.assertEquals(expected.getUserId(), actual.getUserId());
         Assert.assertEquals(expected.getComment(), actual.getComment());
         Assert.assertEquals(expected.getCoordinate(), actual.getCoordinate());
+    }
+
+    @Test
+    public void testFindByKeyE01() {
+        try {
+            logic.findByKey(1L);
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(EntityNotFoundRuntimeException.class));
+        }
+    }
+
+    @Test
+    public void testFindByKeyE02() {
+        try {
+            logic.findByKey(null);
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testFindByCondition01() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        // create condition
+        PlaceCondition condition = new PlaceCondition();
+        condition.setPlaceName("testPlaceName1");
+        condition.setCoordinate(coordinate1);
+
+        List<Places> actuals = logic.findByCondition(condition);
+
+        Assert.assertNotNull(actuals);
+        Assert.assertEquals(1, actuals.size());
+
+        for (Places actual : actuals) {
+            Assert.assertEquals(expected1.getPlaceName(), actual.getPlaceName());
+            Assert.assertEquals(expected1.getComment(), actual.getComment());
+            Assert.assertEquals(expected1.getUserId(), actual.getUserId());
+        }
+    }
+
+    @Test
+    public void testFindByCondition02() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        // create condition
+        PlaceCondition condition = new PlaceCondition();
+        condition.setPlaceName("testPlaceName2");
+
+        List<Places> actuals = logic.findByCondition(condition);
+
+        Assert.assertNotNull(actuals);
+        Assert.assertEquals(1, actuals.size());
+
+        for (Places actual : actuals) {
+            Assert.assertEquals(expected2.getPlaceName(), actual.getPlaceName());
+            Assert.assertEquals(expected2.getComment(), actual.getComment());
+            Assert.assertEquals(expected2.getUserId(), actual.getUserId());
+        }
+    }
+
+    @Test
+    public void testFindByCondition03() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        // create condition
+        PlaceCondition condition = new PlaceCondition();
+        condition.setCoordinate(coordinate1);
+
+        List<Places> actuals = logic.findByCondition(condition);
+
+        Assert.assertNotNull(actuals);
+        Assert.assertEquals(1, actuals.size());
+
+        for (Places actual : actuals) {
+            Assert.assertEquals(expected1.getPlaceName(), actual.getPlaceName());
+            Assert.assertEquals(expected1.getComment(), actual.getComment());
+            Assert.assertEquals(expected1.getUserId(), actual.getUserId());
+        }
+    }
+
+    @Test
+    public void testFindByCondition04() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        // create condition
+        PlaceCondition condition = new PlaceCondition();
+
+        List<Places> actuals = logic.findByCondition(condition);
+
+        Assert.assertNotNull(actuals);
+        Assert.assertEquals(2, actuals.size());
+
+        for (int i = 0; i < actuals.size(); i++) {
+            Assert.assertEquals("testPlaceName" + (i + 1), actuals.get(i).getPlaceName());
+            Assert.assertEquals("testComment" + (i + 1), actuals.get(i).getComment());
+            Assert.assertEquals("testUser" + (i + 1), actuals.get(i).getUserId());
+        }
+    }
+
+    @Test
+    public void testFindByCondition05() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        // create condition
+        PlaceCondition condition = new PlaceCondition();
+        condition.setPlaceName("testPlaceName3");
+
+        List<Places> actuals = logic.findByCondition(condition);
+
+        Assert.assertNotNull(actuals);
+        Assert.assertEquals(0, actuals.size());
+    }
+
+    @Test
+    public void testFindByConditionE01() {
+        try {
+            logic.findByCondition(null);
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
     }
 }
