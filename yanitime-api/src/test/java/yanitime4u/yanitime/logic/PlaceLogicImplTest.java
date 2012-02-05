@@ -23,6 +23,7 @@
  */
 package yanitime4u.yanitime.logic;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ import yanitime4u.yanitime.condition.PlaceCondition;
 import yanitime4u.yanitime.model.Places;
 
 import com.google.appengine.api.datastore.GeoPt;
+import com.google.appengine.api.datastore.Key;
 
 /**
  * @author jupitris
@@ -101,6 +103,7 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
     public void testCreateE01() {
         try {
             logic.create(null);
+            Assert.fail("assertion is failure.");
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
@@ -134,6 +137,7 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
     public void testFindByKeyE01() {
         try {
             logic.findByKey(1L);
+            Assert.fail("assertion is failure.");
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(EntityNotFoundRuntimeException.class));
         }
@@ -143,6 +147,7 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
     public void testFindByKeyE02() {
         try {
             logic.findByKey(null);
+            Assert.fail("assertion is failure.");
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
@@ -346,6 +351,7 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
     public void testFindByConditionE01() {
         try {
             logic.findByCondition(null);
+            Assert.fail("assertion is failure.");
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
@@ -420,6 +426,7 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
 
         try {
             logic.update(null, places1.getVersion(), input);
+            Assert.fail("assertion is failure.");
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
@@ -456,6 +463,7 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
 
         try {
             logic.update(places1.getKey(), null, input);
+            Assert.fail("assertion is failure.");
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
@@ -492,8 +500,252 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
 
         try {
             logic.update(places1.getKey(), places1.getVersion(), null);
+            Assert.fail("assertion is failure.");
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testUpdateE04() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        Map<String, Object> input = new HashMap<String, Object>();
+        input.put("placeName", "testUpdatePlaceName");
+        input.put("coordinate", coordinate2);
+        input.put("comment", "testUpdateComment");
+
+        Key key = Datastore.createKey(Places.class, 1L);
+        try {
+            logic.update(key, places1.getVersion(), input);
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(EntityNotFoundRuntimeException.class));
+        }
+    }
+
+    @Test
+    public void testUpdateE05() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        Map<String, Object> input = new HashMap<String, Object>();
+        input.put("placeName", "testUpdatePlaceName");
+        input.put("coordinate", coordinate2);
+        input.put("comment", "testUpdateComment");
+
+        try {
+            logic.update(places1.getKey(), 10L, input);
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(ConcurrentModificationException.class));
+        }
+    }
+
+    @Test
+    public void testDelete01() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        Places places2 = logic.create(expected2);
+
+        logic.delete(places1.getKey(), places1.getVersion());
+
+        PlaceCondition condition = new PlaceCondition();
+        List<Places> actuals = logic.findByCondition(condition);
+
+        Assert.assertNotNull(actuals);
+        Assert.assertEquals(1, actuals.size());
+
+        for (Places actual : actuals) {
+            Assert.assertEquals(places2.getPlaceName(), actual.getPlaceName());
+            Assert.assertEquals(places2.getComment(), actual.getComment());
+            Assert.assertEquals(places2.getUserId(), actual.getUserId());
+        }
+    }
+
+    @Test
+    public void testDeleteE01() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        try {
+            logic.delete(null, places1.getVersion());
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testDeleteE02() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        try {
+            logic.delete(places1.getKey(), null);
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testDeleteE03() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        Key key = Datastore.createKey(Places.class, 1L);
+        try {
+            logic.delete(key, places1.getVersion());
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(EntityNotFoundRuntimeException.class));
+        }
+    }
+
+    @Test
+    public void testDeleteE04() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        try {
+            logic.delete(places1.getKey(), 10L);
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(ConcurrentModificationException.class));
         }
     }
 }

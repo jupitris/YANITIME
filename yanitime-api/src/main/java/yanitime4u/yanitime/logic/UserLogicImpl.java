@@ -113,9 +113,11 @@ public class UserLogicImpl implements UserLogic {
         AssertionUtil.assertNotNull(users);
         Transaction tx = Datastore.beginTransaction();
         try {
-            Datastore.put(users);
+            Users register = new Users();
+            BeanUtil.copy(users, register);
+            Datastore.put(register);
             tx.commit();
-            return users;
+            return register;
         } catch (ConcurrentModificationException e) {
             if (tx.isActive()) {
                 tx.rollback();
