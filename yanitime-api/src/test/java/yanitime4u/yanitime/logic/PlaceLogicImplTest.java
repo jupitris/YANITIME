@@ -23,7 +23,9 @@
  */
 package yanitime4u.yanitime.logic;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
@@ -344,6 +346,152 @@ public class PlaceLogicImplTest extends AppEngineTestCase {
     public void testFindByConditionE01() {
         try {
             logic.findByCondition(null);
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testUpdate01() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        Map<String, Object> input = new HashMap<String, Object>();
+        input.put("placeName", "testUpdatePlaceName");
+        input.put("coordinate", coordinate2);
+        input.put("comment", "testUpdateComment");
+
+        Places actual = logic.update(places1.getKey(), places1.getVersion(), input);
+
+        Assert.assertNotNull(actual);
+        Assert.assertEquals(places1.getKey().getId(), actual.getKey().getId());
+        Assert.assertEquals(Long.valueOf(2), actual.getVersion());
+        Assert.assertEquals(input.get("placeName"), actual.getPlaceName());
+        Assert.assertEquals(input.get("comment"), actual.getComment());
+    }
+
+    @Test
+    public void testUpdateE01() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        Map<String, Object> input = new HashMap<String, Object>();
+        input.put("placeName", "testUpdatePlaceName");
+        input.put("coordinate", coordinate2);
+        input.put("comment", "testUpdateComment");
+
+        try {
+            logic.update(null, places1.getVersion(), input);
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testUpdateE02() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        Map<String, Object> input = new HashMap<String, Object>();
+        input.put("placeName", "testUpdatePlaceName");
+        input.put("coordinate", coordinate2);
+        input.put("comment", "testUpdateComment");
+
+        try {
+            logic.update(places1.getKey(), null, input);
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testUpdateE03() {
+        GeoPt coordinate1 = new GeoPt((float) 70.01, (float) 50.3);
+
+        Places expected1 = new Places();
+        expected1.setPlaceName("testPlaceName1");
+        expected1.setUserId("testUser1");
+        expected1.setComment("testComment1");
+        expected1.setCoordinate(coordinate1);
+
+        // create test data.
+        Places places1 = logic.create(expected1);
+
+        GeoPt coordinate2 = new GeoPt((float) 10.01, (float) 0.3);
+
+        Places expected2 = new Places();
+        expected2.setPlaceName("testPlaceName2");
+        expected2.setUserId("testUser2");
+        expected2.setComment("testComment2");
+        expected2.setCoordinate(coordinate2);
+
+        // create test data.
+        logic.create(expected2);
+
+        Map<String, Object> input = new HashMap<String, Object>();
+        input.put("placeName", "testUpdatePlaceName");
+        input.put("coordinate", coordinate2);
+        input.put("comment", "testUpdateComment");
+
+        try {
+            logic.update(places1.getKey(), places1.getVersion(), null);
         } catch (RuntimeException e) {
             Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
