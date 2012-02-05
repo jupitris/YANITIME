@@ -31,12 +31,31 @@ import org.slim3.util.StringUtil;
  */
 public final class AssertionUtil {
 
+    /**
+     * Private constructor.
+     */
+    private AssertionUtil() {
+        throw new AssertionError();
+    }
+
+    /**
+     * Assert that a string is not <code>null</code> or not <code>empty</code>.
+     * 
+     * @param s
+     *            the string to check.
+     */
     public static void assertNotBlank(String s) {
         if (StringUtil.isEmpty(s)) {
             throw new IllegalArgumentException("argument cannot be null or empty.");
         }
     }
 
+    /**
+     * Assert that an object is not <code>null</code>.
+     * 
+     * @param o
+     *            the object to check.
+     */
     public static void assertNotNull(Object o) {
         if (o == null) {
             throw new IllegalArgumentException("argument cannot be null.");
