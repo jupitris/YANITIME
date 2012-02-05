@@ -31,6 +31,8 @@ import yanitime4u.yanitime.condition.PlaceCondition;
 import yanitime4u.yanitime.logic.PlaceLogic;
 import yanitime4u.yanitime.logic.PlaceLogicImpl;
 import yanitime4u.yanitime.model.Places;
+import yanitime4u.yanitime.util.AssertionUtil;
+import yanitime4u.yanitime.util.ValidationUtil;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -40,10 +42,23 @@ import com.google.appengine.api.datastore.Key;
  */
 public class PlaceController {
 
-    private final PlaceLogic placeLogic = new PlaceLogicImpl();
+    private PlaceLogic placeLogic = new PlaceLogicImpl();
+
+    /**
+     * @param placeLogic
+     *            the placeLogic to set
+     */
+    public void setPlaceLogic(PlaceLogic placeLogic) {
+        this.placeLogic = placeLogic;
+    }
 
     public Places findById(Map<String, Object> param) {
-        return placeLogic.findByKey(Long.valueOf(param.get("id").toString()));
+        AssertionUtil.assertNotNull(param);
+        String id = param.get("id").toString();
+        if (ValidationUtil.isNumeric(id)) {
+
+        }
+        return placeLogic.findByKey(Long.valueOf(id));
     }
 
     public List<Places> find(PlaceCondition condition) {
