@@ -23,23 +23,53 @@
  */
 package yanitime4u.yanitime.util;
 
-import org.slim3.util.StringUtil;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author jupitris
  * 
  */
-public final class AssertionUtil {
+public class AssertionUtilTest {
 
-    public static void assertNotBlank(String s) {
-        if (StringUtil.isEmpty(s)) {
-            throw new IllegalArgumentException("argument cannot be null or empty.");
+    @Test
+    public void testAssertNotBlank01() {
+        AssertionUtil.assertNotBlank("assertion.");
+    }
+
+    @Test
+    public void testAssertNotBlankE01() {
+        try {
+            AssertionUtil.assertNotBlank(null);
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
     }
 
-    public static void assertNotNull(Object o) {
-        if (o == null) {
-            throw new IllegalArgumentException("argument cannot be null.");
+    @Test
+    public void testAssertNotBlankE02() {
+        try {
+            AssertionUtil.assertNotBlank("");
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
+        }
+    }
+
+    @Test
+    public void testAssertNotNull01() {
+        AssertionUtil.assertNotNull(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void testAssertNotNullE01() {
+        try {
+            AssertionUtil.assertNotNull(null);
+            Assert.fail("assertion is failure.");
+        } catch (RuntimeException e) {
+            Assert.assertThat(e, CoreMatchers.instanceOf(IllegalArgumentException.class));
         }
     }
 }
