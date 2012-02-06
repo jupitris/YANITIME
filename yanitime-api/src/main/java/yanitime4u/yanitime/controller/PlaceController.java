@@ -32,7 +32,6 @@ import yanitime4u.yanitime.logic.PlaceLogic;
 import yanitime4u.yanitime.logic.PlaceLogicImpl;
 import yanitime4u.yanitime.model.Places;
 import yanitime4u.yanitime.util.AssertionUtil;
-import yanitime4u.yanitime.util.ValidationUtil;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -52,32 +51,35 @@ public class PlaceController {
         this.placeLogic = placeLogic;
     }
 
-    public Places findById(Map<String, Object> param) {
+    public Places findById(Map<String, Long> param) {
         AssertionUtil.assertNotNull(param);
+        AssertionUtil.assertNotNull(param.get("id"));
         String id = param.get("id").toString();
-        if (ValidationUtil.isNumeric(id)) {
-
-        }
         return placeLogic.findByKey(Long.valueOf(id));
     }
 
     public List<Places> find(PlaceCondition condition) {
+        AssertionUtil.assertNotNull(condition);
         return placeLogic.findByCondition(condition);
     }
 
     public Places create(Places places) {
+        AssertionUtil.assertNotNull(places);
         return placeLogic.create(places);
     }
 
-    public void update(Places places) {
+    public Places update(Places places) {
+        AssertionUtil.assertNotNull(places);
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("placeName", places.getPlaceName());
         input.put("coordinate", places.getCoordinate());
         input.put("comment", places.getComment());
-        placeLogic.update(places.getKey(), places.getVersion(), input);
+        return placeLogic.update(places.getKey(), places.getVersion(), input);
     }
 
     public void delete(Key id, Long version) {
+        AssertionUtil.assertNotNull(id);
+        AssertionUtil.assertNotNull(version);
         placeLogic.delete(id, version);
     }
 }
