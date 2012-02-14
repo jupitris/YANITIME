@@ -31,6 +31,7 @@ import yanitime4u.yanitime.condition.UserCondition;
 import yanitime4u.yanitime.logic.UserLogic;
 import yanitime4u.yanitime.logic.UserLogicImpl;
 import yanitime4u.yanitime.model.Users;
+import yanitime4u.yanitime.util.AssertionUtil;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -40,21 +41,34 @@ import com.google.appengine.api.datastore.Key;
  */
 public class UserController {
 
-    private final UserLogic userLogic = new UserLogicImpl();
+    private UserLogic userLogic = new UserLogicImpl();
 
-    public Users findById(Map<String, Object> param) {
-        return userLogic.findByKey(Long.valueOf(param.get("id").toString()));
+    /**
+     * @param userLogic
+     *            the userLogic to set
+     */
+    public void setUserLogic(UserLogic userLogic) {
+        this.userLogic = userLogic;
+    }
+
+    public Users findById(Map<String, Long> param) {
+        AssertionUtil.assertNotNull(param);
+        AssertionUtil.assertNotNull(param.get("id"));
+        return userLogic.findByKey(param.get("id"));
     }
 
     public List<Users> find(UserCondition condition) {
+        AssertionUtil.assertNotNull(condition);
         return userLogic.findByCondition(condition);
     }
 
-    public void create(Users users) {
-        userLogic.create(users);
+    public Users create(Users users) {
+        AssertionUtil.assertNotNull(users);
+        return userLogic.create(users);
     }
 
-    public void update(Users users) {
+    public Users update(Users users) {
+        AssertionUtil.assertNotNull(users);
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("age", users.getAge());
         input.put("email", users.getEmail());
@@ -62,7 +76,7 @@ public class UserController {
         input.put("nickName", users.getNickName());
         input.put("userId", users.getUserId());
         input.put("userName", users.getUserName());
-        userLogic.update(users.getKey(), users.getVersion(), input);
+        return userLogic.update(users.getKey(), users.getVersion(), input);
     }
 
     public void delete(Key id, Long version) {

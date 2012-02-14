@@ -54,8 +54,7 @@ public class PlaceController {
     public Places findById(Map<String, Long> param) {
         AssertionUtil.assertNotNull(param);
         AssertionUtil.assertNotNull(param.get("id"));
-        String id = param.get("id").toString();
-        return placeLogic.findByKey(Long.valueOf(id));
+        return placeLogic.findByKey(param.get("id"));
     }
 
     public List<Places> find(PlaceCondition condition) {
