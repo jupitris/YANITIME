@@ -26,11 +26,10 @@ package yanitime4u.yanitime.condition;
 import org.slim3.datastore.Attribute;
 
 import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.datastore.Text;
 
 /**
  * @author jupitris
- *
+ * 
  */
 public class PlaceCondition {
 
@@ -49,7 +48,8 @@ public class PlaceCondition {
     }
 
     /**
-     * @param placeName the placeName to set
+     * @param placeName
+     *            the placeName to set
      */
     public void setPlaceName(String placeName) {
         this.placeName = placeName;
@@ -63,14 +63,23 @@ public class PlaceCondition {
     }
 
     /**
-     * @param coordinate the coordinate to set
+     * @param coordinate
+     *            the coordinate to set
      */
     public void setCoordinate(GeoPt coordinate) {
         this.coordinate = coordinate;
     }
 
     /**
-     * @param comment the comment to set
+     * @return the comment
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * @param comment
+     *            the comment to set
      */
     public void setComment(String comment) {
         this.comment = comment;

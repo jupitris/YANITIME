@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>yanitime4u</groupId>
   <artifactId>yanitime-api</artifactId>
-  <version>${app.version}</version>
+  <version>0.0.1</version>
   <packaging>war</packaging>
   <build>
   	<plugins>
@@ -283,7 +283,7 @@
   		<artifactId>slim3-gen</artifactId>
   		<version>${slim3.version}</version>
         <type>jar</type>
-        <scope>provided</scope>
+        <scope>runtime</scope>
         <exclusions>
         	<exclusion>
         		<artifactId>ant</artifactId>
