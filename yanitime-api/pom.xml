@@ -283,7 +283,7 @@
   		<artifactId>slim3-gen</artifactId>
   		<version>${slim3.version}</version>
         <type>jar</type>
-        <scope>runtime</scope>
+        <scope>compile</scope>
         <exclusions>
         	<exclusion>
         		<artifactId>ant</artifactId>
