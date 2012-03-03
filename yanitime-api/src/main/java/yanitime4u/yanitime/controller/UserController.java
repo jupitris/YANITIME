@@ -51,10 +51,10 @@ public class UserController {
         this.userLogic = userLogic;
     }
 
-    public Users findById(Map<String, Long> param) {
+    public Users findById(Map<String, String> param) {
         AssertionUtil.assertNotNull(param);
         AssertionUtil.assertNotNull(param.get("id"));
-        return userLogic.findByKey(param.get("id"));
+        return userLogic.findByKey(Long.valueOf(param.get("id")));
     }
 
     public List<Users> find(UserCondition condition) {

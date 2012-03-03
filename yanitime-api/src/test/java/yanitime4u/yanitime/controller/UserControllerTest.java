@@ -87,8 +87,8 @@ public class UserControllerTest extends AppEngineTestCase {
         Mockito.when(mock.findByKey(1L)).thenReturn(expected);
         controller.setUserLogic(mock);
 
-        Map<String, Long> input = new HashMap<String, Long>();
-        input.put("id", 1L);
+        Map<String, String> input = new HashMap<String, String>();
+        input.put("id", "1");
         Users actual = controller.findById(input);
 
         Assert.assertNotNull(actual);
@@ -120,8 +120,8 @@ public class UserControllerTest extends AppEngineTestCase {
         Mockito.when(mock.findByKey(2L)).thenThrow(EntityNotFoundRuntimeException.class);
         controller.setUserLogic(mock);
 
-        Map<String, Long> input = new HashMap<String, Long>();
-        input.put("id", 2L);
+        Map<String, String> input = new HashMap<String, String>();
+        input.put("id", "2");
         try {
             controller.findById(input);
             Assert.fail("assertion is failure.");
@@ -154,7 +154,7 @@ public class UserControllerTest extends AppEngineTestCase {
 
     @Test
     public void testFindByIdE04() {
-        Map<String, Long> input = new HashMap<String, Long>();
+        Map<String, String> input = new HashMap<String, String>();
         input.put("id", null);
         try {
             controller.findById(input);
@@ -166,8 +166,8 @@ public class UserControllerTest extends AppEngineTestCase {
 
     @Test
     public void testFindByIdE05() {
-        Map<String, Long> input = new HashMap<String, Long>();
-        input.put("idd", 1234L);
+        Map<String, String> input = new HashMap<String, String>();
+        input.put("idd", "1234");
         try {
             controller.findById(input);
             Assert.fail("assertion is failure.");
