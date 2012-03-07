@@ -92,6 +92,13 @@
                             <exclude>**/*Test.class</exclude>
                         </excludes>
                     </instrumentation>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </configuration>
             </plugin>
             <plugin>
