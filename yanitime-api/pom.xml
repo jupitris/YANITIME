@@ -139,6 +139,11 @@
                 	<artifactId>maven-checkstyle-plugin</artifactId>
                 	<version>2.9.1</version>
                 </plugin>
+                <plugin>
+                	<groupId>org.codehaus.mojo</groupId>
+                	<artifactId>findbugs-maven-plugin</artifactId>
+                	<version>2.4.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -288,6 +293,14 @@
         		<artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <configLocation>config/jupitris_labs_checkstyle.xml</configLocation>
+                </configuration>
+        	</plugin>
+        	<plugin>
+        		<groupId>org.codehaus.mojo</groupId>
+        		<artifactId>findbugs-maven-plugin</artifactId>
+                <configuration>
+                    <effort>Max</effort>
+                    <xmlOutput>true</xmlOutput>
                 </configuration>
         	</plugin>
         </plugins>
