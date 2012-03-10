@@ -98,6 +98,22 @@
                     </instrumentation>
                 </configuration>
             </plugin>
+            <plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>findbugs-maven-plugin</artifactId>
+                            <configuration>
+                                <effort>Max</effort>
+                                <xmlOutput>true</xmlOutput>
+                            </configuration>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+            </plugin>
         </plugins>
         <outputDirectory>target/classes</outputDirectory>
         <pluginManagement>
@@ -143,6 +159,11 @@
                 	<groupId>org.codehaus.mojo</groupId>
                 	<artifactId>findbugs-maven-plugin</artifactId>
                 	<version>2.4.0</version>
+                </plugin>
+                <plugin>
+                	<groupId>org.apache.maven.plugins</groupId>
+                	<artifactId>maven-site-plugin</artifactId>
+                	<version>3.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
