@@ -144,6 +144,11 @@
                 	<artifactId>findbugs-maven-plugin</artifactId>
                 	<version>2.4.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>2.7.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -303,6 +308,18 @@
                     <xmlOutput>true</xmlOutput>
                 </configuration>
         	</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>pmd</report>
+                            <report>cpd</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>
     <properties>
